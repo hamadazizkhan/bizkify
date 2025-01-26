@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "951814763342",
+    "project_id": "bizkifyapp",
+    "storage_bucket": "bizkifyapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:951814763342:android:8d78d155069f8ecfd2241f",
+        "android_client_info": {
+          "package_name": "com.bizkify.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAlA3tz7zYKjIy29hLLNzN2Rt-RpSRIL4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:951814763342:android:db9aab928b457a67d2241f",
+        "android_client_info": {
+          "package_name": "com.example.bizkifyapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAlA3tz7zYKjIy29hLLNzN2Rt-RpSRIL4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
