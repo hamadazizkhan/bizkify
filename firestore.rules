@@ -1,0 +1,73 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 🔒 Allow access only for authenticated users
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // 🔒 Allow access only for the user's own documents
+    function isOwner(userId) {
+      return request.auth.uid == userId; // Changed from `request.auth.token.email` to `request.auth.uid`
+    }
+
+    // 🔍 Check required fields in a document
+    function hasFields(fields) {
+      return fields.all(field => field in request.resource.data);
+    }
+
+    // ✅ Rules for the users collection
+    match /users/{userId} {
+      allow read, write: if isAuthenticated() && isOwner(userId);
+
+      // Ensure required fields are present on write
+      allow write: if hasFields(['name', 'email', 'profile_picture', 'location', 'preferred_currency']);
+    }
+
+    // ✅ Rules for the expenses collection
+    match /expenses/{expenseId} {
+      allow read, write: if isAuthenticated() &&
+                         request.resource.data.user_id == request.auth.uid; // Changed to use UID
+
+      // Validate required fields in expenses
+      allow write: if hasFields(['expense_id', 'user_id', 'amount', 'category', 'payment_status', 'created_at']);
+    }
+
+    // ✅ Rules for the vendors collection
+    match /vendors/{vendorId} {
+      allow read, write: if isAuthenticated() &&
+                         request.resource.data.user_id == request.auth.uid; // Changed to use UID
+
+      // Ensure required fields in vendors
+      allow write: if hasFields(['vendor_id', 'user_id', 'name', 'contact_info', 'address']);
+    }
+
+    // ✅ Rules for the budgets collection
+    match /budgets/{budgetId} {
+      allow read, write: if isAuthenticated() &&
+                         request.resource.data.user_id == request.auth.uid; // Changed to use UID
+
+      // Validate required fields in budgets
+      allow write: if hasFields(['budget_id', 'user_id', 'categories', 'amount', 'created_at']);
+    }
+
+    // ✅ Rules for the reports collection
+    match /reports/{reportId} {
+      allow read, write: if isAuthenticated() &&
+                         request.resource.data.user_id == request.auth.uid; // Changed to use UID
+
+      // Ensure required fields in reports
+      allow write: if hasFields(['report_id', 'user_id', 'report_type', 'created_at']);
+    }
+
+    // ✅ Rules for the analytics collection
+    match /analytics/{analyticsId} {
+      allow read, write: if isAuthenticated() &&
+                         request.resource.data.user_id == request.auth.uid; // Changed to use UID
+
+      // Validate required fields in analytics
+      allow write: if hasFields(['analytics_id', 'user_id', 'total_expenses', 'last_updated']);
+    }
+  }
+}

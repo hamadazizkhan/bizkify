@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart'; // Import the generated file
 import 'login_screen.dart'; // Import the Login Screen file
+import 'dashboard_screen.dart'; // Import the Dashboard Screen file
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +21,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoginScreen(), // Set the Login Screen as the home screen
+      initialRoute: '/login',
+      routes: {
+        '/login': (context) => LoginScreen(), // Define the Login Screen route
+        '/dashboard': (context) => DashboardScreen(), // Define the Dashboard Screen route
+      },
     );
   }
 }
